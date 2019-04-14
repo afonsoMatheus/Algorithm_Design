@@ -266,11 +266,18 @@ def backtrack(grid, heur):
 
 ''' calls backtrach for each sudoku problem '''
 
-def solve_sudoku(grid, heur):
+def solve_sudoku(arq, heur):
     
     global count
+
+    grid = read_problem(arq)
+
+    out = open(arq + "_solution", "w")
+    out.write(str(len(grid)))
+    out.write("\n")
     
     for i in range(len(grid)):
+        
         inicio = time.time()
         count = 0
         print("\n")
@@ -282,6 +289,20 @@ def solve_sudoku(grid, heur):
         print("\n" + "Tempo: " + str(fim - inicio))
         print("\n" + "-----------------------------------------------")
 
+        write_solution(grid[i], out)
+
+    out.close()
+
+''' write result on txt '''
+
+def write_solution(grid, out):
+	for i in range(len(grid)):
+		for j in range(len(grid)):
+			if(j == len(grid) - 1):
+				out.write(str(grid[i][j]))
+			else:
+				out.write(str(grid[i][j]) + " ")
+		out.write("\n")
         
 ''' main '''
 
@@ -289,6 +310,6 @@ if __name__ == "__main__":
     arq = sys.argv[1]
     heur = sys.argv[2]
         
-    solve_sudoku(read_problem(arq), heur)
+    solve_sudoku(arq, heur)
 
 
