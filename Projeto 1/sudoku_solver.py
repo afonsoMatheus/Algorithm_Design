@@ -176,9 +176,9 @@ def foward_verification(grid, spoti, spotj):
 # In[5]:
 
 
-''' mvs algorithm '''
+''' mvr algorithm '''
 
-def mvs(grid, empty):
+def mvr(grid, empty):
     
     spoti = 0
     spotj = 0
@@ -201,7 +201,7 @@ def mvs(grid, empty):
 # In[6]:
 
 
-''' backtrack with flags, heur values = None, fv, mvs  '''
+''' backtrack with flags, heur values = None, fv, mvr  '''
 
 def backtrack(grid, heur):
     
@@ -218,14 +218,14 @@ def backtrack(grid, heur):
         pvalues = foward_verification(grid, spoti, spotj)
         if(pvalues == []):
             return False
-    elif(heur == "mvs"):
-        pvalues, spoti, spotj = mvs(grid, empty)
+    elif(heur == "mvr"):
+        pvalues, spoti, spotj = mvr(grid, empty)
         if(pvalues == []):
             return False
     
     begin = 0
     end = 0
-    if(heur == "fv" or heur == "mvs"):
+    if(heur == "fv" or heur == "mvr"):
         begin = 0
         end = len(pvalues)
     else:
@@ -239,7 +239,7 @@ def backtrack(grid, heur):
         if(count > 10**6):
         	return "Número de atribuições excede limite máximo!"
         
-        if(heur == "fv" or heur == "mvs"):
+        if(heur == "fv" or heur == "mvr"):
             chosen = str(pvalues[i])
         else:
             chosen = str(i)
