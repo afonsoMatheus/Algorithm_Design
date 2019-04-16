@@ -160,10 +160,7 @@ def ver_values_subgrid(grid, lin , col, pvalues):
         
 
 def foward_verification(grid, spoti, spotj):
-    
-    tvalues = {}
           
-        
     pvalues = ["1","2","3","4","5","6","7","8","9"]
         
     pvalues = ver_values_lin(grid, spoti, pvalues)
@@ -196,7 +193,6 @@ def mvr(grid, empty):
             
     return min, spoti, spotj
     
-
 
 # In[6]:
 
