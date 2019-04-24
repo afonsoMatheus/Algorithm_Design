@@ -186,6 +186,7 @@ def mvr(grid, empty):
     
     for i in range(1, len(empty)):
         aux = foward_verification(grid, empty[i][0], empty[i][1])
+
         if(len(min) > len(aux)):
             min = foward_verification(grid, empty[i][0], empty[i][1])
             spoti = empty[i][0]
@@ -211,9 +212,19 @@ def backtrack(grid, heur):
     spoti, spotj = empty[0][0], empty[0][1]
     
     if(heur == "fv"):
-        pvalues = foward_verification(grid, spoti, spotj)
-        if(pvalues == []):
-            return False
+        
+        for i in range(len(empty)):
+                
+            if(i == 0):
+                pvalues = foward_verification(grid, spoti, spotj)
+                if(pvalues == []):
+                    return False
+
+            check = foward_verification(grid, empty[i][0], empty[i][1])
+                
+            if(check == []):
+                return False
+
     elif(heur == "mvr"):
         pvalues, spoti, spotj = mvr(grid, empty)
         if(pvalues == []):
