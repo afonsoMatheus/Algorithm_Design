@@ -32,16 +32,17 @@ class binheap:
     def bot_up(self, i):
                 
         while (i//2 > 0):
-            if (self.heap[i-1] < self.heap[(i//2)-1]):
+            if (self.heap[i-1][0] < self.heap[(i//2)-1][0]):
                 tmp = self.heap[(i//2)-1]
                 self.heap[(i//2)-1] = self.heap[i-1]
                 self.heap[i-1] = tmp
             i = i//2
     
-    #Args key, int
+    #Args key item, int object
     #Ret None; adds the new element in the heap
-    def insert(self, key):
+    def insert(self, key, item):
         
+        key = [key, item]
         self.heap.append(key)
         self.size = self.size + 1
         self.bot_up(self.size)
@@ -57,7 +58,7 @@ class binheap:
     def top_down(self, i):
         while (i * 2 < self.size - 1):
             min_ind = self.get_min(i)
-            if self.heap[i] > self.heap[min_ind]:
+            if self.heap[i][0] > self.heap[min_ind][0]:
                 tmp = self.heap[i]
                 self.heap[i] = self.heap[min_ind]
                 self.heap[min_ind] = tmp
@@ -69,7 +70,7 @@ class binheap:
         if (i * 2 + 2 > self.size - 1):
             return i*2 + 1
         else:
-            if self.heap[i*2 + 1] < self.heap[(i*2)+2]:
+            if self.heap[i*2 + 1][0] < self.heap[(i*2)+2][0]:
                 return i * 2 + 1
             else:
                 return i * 2 + 2
@@ -77,7 +78,7 @@ class binheap:
     #Args None
     #Ret int; the removed item from the heap
     def delete(self):
-        remov = self.heap[0]
+        remov = self.heap[0][1]
         self.heap[0] = self.heap[self.size - 1]
         self.size = self.size - 1
         self.heap.pop()
@@ -92,22 +93,54 @@ class binheap:
     #Args i; int
     #Ret int; a position from the heap
     def get_fat(self, i):
-        return self.heap[mt.ceil(i/2) - 1] if i > 0 else 'root'
+        return self.heap[mt.ceil(i/2) - 1][0] if i > 0 else 'root'
     
     #Args i; int
     #Ret: int, int; two positions from the heap
     def get_sons(self, i):
-        return [self.heap[i*2 + 1], self.heap[i*2 + 2]]
+        return [self.heap[i*2 + 1][0], self.heap[i*2 + 2][0]]
 
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
+    def change_key(self, cost, item):
+        
+        i = self.locin_heap(item)
+        
+        if(cost < self.heap[i][0]):
+            self.heap[i][0] = cost
+            self.ck_botup(i)
+            
+    def ck_botup(self, i):
+                
+        while (i/2 > 0):
+            if (self.heap[i][0] < self.heap[i//2][0]):
+                tmp = self.heap[i//2]
+                self.heap[i//2] = self.heap[i]
+                self.heap[i] = tmp
+            i = i//2
+    
+    def locin_heap(self, item):
+        for i in range(len(self.heap)):
+            if(self.heap[i][1] == item):
+                return i   
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+    
 
 
 
