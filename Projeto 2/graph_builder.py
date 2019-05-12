@@ -8,6 +8,7 @@ class bgraph:
     def build_graph(file):
 
         ver = read_data(file)
+        edges = []
 
         G = {}
 
@@ -16,10 +17,13 @@ class bgraph:
             G[p] = []
             for j in range(1, len(ver) + 1):
                 dist = dist_euclidiana(ver[i][:2],ver[j][:2])
+                if(dist != 0):
+                    edges.append([dist, i, j])
                 G[p].append(dist)
+                
             p = p + 1
 
-        return G, ver
+        return G, ver, edges     
     
     def read_classes(file):
         

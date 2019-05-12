@@ -7,6 +7,7 @@ import networkx
 from networkx import Graph
 import pandas as pd
 import seaborn as sbn
+from structs import unionfind
 
 class pcluster:
     
@@ -42,7 +43,7 @@ class pcluster:
                     classes.append(j+1)
                     
         return classes
-        
+    
     
 def make_clusters(edges):
     
@@ -61,8 +62,9 @@ def make_clusters(edges):
     for component in networkx.connected_components(undirected):
         cluster[i] = component
         i = i + 1
-        
+            
     return cluster
+    
 
 
 

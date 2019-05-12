@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
-import binary_heap as bh
+import structs as bh
 
 class mst:
     
