@@ -13,6 +13,7 @@ class binheap:
     def __init__(self):
         self.heap = []
         self.size = 0
+        self.loc = {}
         
     '''
     insert and bot_up are functions that adds an element and sort the list 
@@ -26,8 +27,14 @@ class binheap:
         while (i//2 > 0):
             if (self.heap[i-1][0] < self.heap[(i//2)-1][0]):
                 tmp = self.heap[(i//2)-1]
+
+                self.loc[self.heap[(i//2)-1][1]] = i-1
                 self.heap[(i//2)-1] = self.heap[i-1]
+                
+                self.loc[self.heap[i-1][1]] = (i//2)-1
                 self.heap[i-1] = tmp
+                
+                
             i = i//2
     
     #Args key item, int object
@@ -36,6 +43,7 @@ class binheap:
         
         key = [key, item]
         self.heap.append(key)
+        self.loc[item] = self.size
         self.size = self.size + 1
         self.bot_up(self.size)
         
@@ -52,8 +60,13 @@ class binheap:
             min_ind = self.get_min(i)
             if self.heap[i][0] > self.heap[min_ind][0]:
                 tmp = self.heap[i]
+
+                self.loc[self.heap[i][1]] = min_ind
                 self.heap[i] = self.heap[min_ind]
+
+                self.loc[self.heap[min_ind][1]] = i
                 self.heap[min_ind] = tmp
+
             i = min_ind
             
     #Args i, int
@@ -71,24 +84,30 @@ class binheap:
     #Ret object; the removed object from the heap
     def delete(self):
         remov = self.heap[0][1]
+
         self.heap[0] = self.heap[self.size - 1]
+        self.loc[self.heap[0][1]] = 0
+
+        self.loc.pop(remov)
         self.size = self.size - 1
+
         self.heap.pop()
         self.top_down(0)
         return remov
     
     
     '''
-    change_key, ck_botup and locin_heap are functions that updates the key value from an item, causing a 
-    rearrangement in the heap to maintain the prority feature
+    change_key and ck_botup are functions that updates the key value from an item, causing a 
+    rearrangement in the heap to maintain the prority feature. It uses an auxiliary dictionary
+    where the key is the item and the value is the position in the heap
     '''
     
     #Args cost item, int object
     #Ret None; change the key from a position in the heap
     def change_key(self, cost, item):
         
-        i = self.locin_heap(item)
-        
+        i = self.loc[item]
+
         if(cost < self.heap[i][0]):
             self.heap[i][0] = cost
             self.ck_botup(i)
@@ -99,19 +118,18 @@ class binheap:
     def ck_botup(self, i):
                 
         while (i/2 > 0):
+
             if (self.heap[i][0] < self.heap[i//2][0]):
                 tmp = self.heap[i//2]
+
+                self.loc[self.heap[i//2][1]] = i
                 self.heap[i//2] = self.heap[i]
+
+                self.loc[self.heap[i][1]] = i//2
                 self.heap[i] = tmp
+
             i = i//2
-    
-    #Args item, object
-    #Ret int; the index of the item in the heap
-    def locin_heap(self, item):
-        for i in range(len(self.heap)):
-            if(self.heap[i][1] == item):
-                return i
-    
+        
     '''
     get_fat and get_sons are auxiliary function to see the father and the sons of a determined
     index in the heap.
