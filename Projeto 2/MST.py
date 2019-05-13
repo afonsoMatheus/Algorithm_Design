@@ -3,8 +3,21 @@
 from structs import binheap as bh
 from structs import unionfind as uf
 
+'''
+class that implements two mst algorithms: Kruskal and Prim
+Functions are: prim_algorithm, kruskal_algorithm
+'''
+
 class mst:
     
+    '''
+    prim algorithm makes a mst using a heap structure, which for each
+    vertex v of G will have an edge associated, with are v and the father
+    of v
+    '''
+    
+    #Args G, dict
+    #Ret dict; the father of each vertex of G 
     def prim_algorithm(G):
     
         ver = list(G.keys())
@@ -49,6 +62,14 @@ class mst:
 
         return pred
     
+    
+    '''
+    kruskal algorithm makes a mst using an union find structure, using the sets
+    to add edges that wont form a cycle
+    '''
+    
+    #Args G edges, dict list
+    #Ret list; the edges that forms the mst
     def kruskal_algorithm(G, edges):
     
         ver = G.keys()

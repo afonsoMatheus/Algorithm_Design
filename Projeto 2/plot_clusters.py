@@ -1,13 +1,15 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[4]:
-
 import networkx
 from networkx import Graph
 import pandas as pd
 import seaborn as sbn
-from structs import unionfind
+
+'''
+class that returns and plots the results of the clustering algorithms
+Functions are: show_clusters, classes_list
+'''
 
 class pcluster:
     
@@ -15,7 +17,13 @@ class pcluster:
         self.cluster = make_clusters(edges)
         self.edges = edges
         self.ver = ver
+        
+    '''
+    plots the clustering graphic
+    '''
     
+    #Args name, String
+    #Ret None, plots the graphic and save it as a figure
     def show_clusters(self, name):
     
         df = pd.DataFrame()
@@ -33,6 +41,12 @@ class pcluster:
         sbn_plot = sbn.lmplot('x', 'y', data= df, fit_reg=False, hue="cluster")
         sbn_plot.savefig("out/" + name)
         
+    '''
+    make the list of classes obtained with the clustering algorithm to make comparisons
+    '''
+    
+    #Args None
+    #Ret list; the classes list of the clustering algorithm
     def classes_list(self):
         
         classes = []
@@ -44,7 +58,14 @@ class pcluster:
                     
         return classes
     
+
     
+'''
+using the connected components, make the clusters
+'''
+
+#Args edges, dict
+#Ret dict; the clusters with its vertex
 def make_clusters(edges):
     
     edges1 = []
