@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
-import structs as bh
+from structs import binheap as bh
+from structs import unionfind as uf
 
 class mst:
     
@@ -23,7 +24,7 @@ class mst:
             min_path[ver[i]] = 9999
             pred[ver[i]] = start
 
-        heap = bh.binheap()
+        heap = bh()
 
         for i in range(1,len(ver)):
 
@@ -47,4 +48,28 @@ class mst:
                         pred[ver[i]] = minimun
 
         return pred
+    
+    def kruskal_algorithm(G, edges):
+    
+        ver = G.keys()
+        edges = sorted(edges)
+        sets = {}
+
+        nedges = []
+
+        for i in range(1, len(ver) + 1):
+            sets[i] = i
+
+        unionf = uf(sets)
+
+        for i in range(len(edges)):
+
+            ver1, ver2 = edges[i][1], edges[i][2]
+
+            if(unionf.find(ver1) != unionf.find(ver2)):
+                nedges.append(edges[i])
+                unionf.union(ver1,ver2)
+
+        return nedges
+    
 

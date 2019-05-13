@@ -49,11 +49,11 @@ def make_clusters(edges):
     
     edges1 = []
     edges2 = []
-    
+        
     for i in range(len(edges)):
         edges1.append(edges[i][1])
         edges2.append(edges[i][2])
-    
+                    
     undirected = Graph()
     undirected.add_edges_from(list(zip(edges1, edges2)))
     
@@ -62,6 +62,7 @@ def make_clusters(edges):
     for component in networkx.connected_components(undirected):
         cluster[i] = component
         i = i + 1
+        
             
     return cluster
     

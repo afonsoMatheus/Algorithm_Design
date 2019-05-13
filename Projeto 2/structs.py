@@ -128,8 +128,8 @@ class unionfind:
     
     def __init__(self, sets):
         self.sets = sets
-        self.size = []
-        for i in range(len(self.sets) + 1):
+        self.size = [0]
+        for i in range(1, len(self.sets)+1):
             self.size.append(1)
 
     def find(self, i):
