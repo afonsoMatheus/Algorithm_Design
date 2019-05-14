@@ -32,11 +32,6 @@ class mst:
         exp.append(start)
         pred[start] = start
 
-        for i in range(1, len(ver)):
-
-            min_path[ver[i]] = 9999
-            pred[ver[i]] = start
-
         heap = bh()
 
         for i in range(1,len(ver)):
