@@ -5,6 +5,7 @@ import networkx
 from networkx import Graph
 import pandas as pd
 import seaborn as sbn
+import matplotlib.pyplot as plt
 
 '''
 class that returns and plots the results of the clustering algorithms
@@ -39,6 +40,7 @@ class pcluster:
                 
         sbn.set()        
         sbn_plot = sbn.lmplot('x', 'y', data= df, fit_reg=False, hue="cluster")
+        plt.title(name)
         sbn_plot.savefig("out/" + name)
         
     '''
@@ -57,9 +59,30 @@ class pcluster:
                     classes.append(j+1)
                     
         return classes
+
+'''
+plots the rand index graphic
+'''
+
+#Args ri name, list String
+#Ret None; plot a rand index graphic
+def plot_randindex(ri, name):
+    
+    df = pd.DataFrame()
+
+    df['k'] = []
+    df['Rand index'] = []
+            
+    for i in range(len(ri)):
+        df.loc[i] = [ri[i][1]] + [ri[i][0]]
+            
+    sbn.set()        
+    sbn_plot = sbn.lineplot('k', 'Rand index', data= df)
+    plt.title(name)
+    fig = sbn_plot.get_figure()
+    fig.savefig("out/" + name)
     
 
-    
 '''
 using the connected components, make the clusters
 '''
