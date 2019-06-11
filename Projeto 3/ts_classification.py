@@ -50,31 +50,33 @@ KNN (K-Nearest Neighboors) algorithm with k = 1
 '''
 
 #Args train test target, list list list 
-#Ret list; the classification of the test
+#Ret list; the classification of the test instances
 def knn(train, test, target):
     
     results = []
     
     print("Making classification...")
-    print("Series from test classified:")
-
     
     for j in range(len(test)):
         
         heap = []
+
+        begin = time.time()
 
         for i in range(len(train)):
             
             hp.heappush(heap, [DTW(train[i], test[j]), target[i]])
         
         near = heap[0:1]
-                
+
+        end = time.time()
+
         results.append(near[0][1])
 
-        sys.stdout.write("\r{0}".format(j))
+        sys.stdout.write("################################# Processing time for the series: %f   \r" % (end-begin))
+        sys.stdout.write("Series from test classified: %d  \r" % (j + 1))
         sys.stdout.flush()
-        time.sleep(0.5)
-                        
+     
     return results
 
 '''
@@ -126,7 +128,7 @@ if __name__ == "__main__":
     pred_label = knn(ts_train, ts_test, target_train)
 
     end = time.time()
-    print("Time: ", end - start)
+    print(" Total time: ", end - start)
     
     print("Accuracy: ", evaluation(pred_label, real_label))
 
